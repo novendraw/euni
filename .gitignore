@@ -6,3 +6,5 @@ src/backupan
 src/serviceWorker\.js
 
 src/logo\.svg
+
+\.idea/
