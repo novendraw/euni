@@ -72,24 +72,26 @@ class App extends React.Component{
 
     }
     handleSearch(event) {
-    this.setState({keyword: event.target.value});
-    
-      const expires = new Date();
-      expires.setDate(Date.now() + 86400);
-
-      cookie.save(
-          'token',
-          cookie.load('token'),
-          {
-            path: '/',
-            expires
-          });
-
-    if (this.state.byname) {
-      this.handleByName(event);
-    } else {
-      this.handleById(event);
-    }
+      this.setState({keyword: event.target.value});
+        const expires = new Date();
+        expires.setDate(Date.now() + 86400);
+        cookie.save(
+            'token',
+            cookie.load('token'),
+            {
+              path: '/',
+              expires
+            });
+      if (Number.isInteger(Number.parseInt(this.state.count)) && parseInt(this.state.count) > 0) {
+        if (this.state.byname) {
+          this.handleByName(event);
+        } else {
+          this.handleById(event);
+        }
+      } else {
+        this.setState({count:1});
+        alert("Please provide valid \"Data per Page\" parameter")
+      }
     }
     handleUsernameChange(event) {
     this.setState({username: event.target.value});
@@ -151,8 +153,12 @@ class App extends React.Component{
       const self = this;
       axios.post('https://cors-vendra.herokuapp.com/', qs.stringify(datadata), config)
       .then(function (response) {
-        if (response.data.code == null) {
-          alert("Please supply a username and a password!");
+        if (response.data.code == null ) {
+          if (response.data[11] === '3'){
+            alert("Username exceeded 20-character limitation!")
+          } else {
+            alert("Please supply a username and a password!");
+          }
         } else {
           if (response.data.code === -4) {
             alert("That username is already taken!");
