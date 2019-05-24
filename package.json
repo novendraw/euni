@@ -4,20 +4,13 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-jsonp": "^1.0.2",
-    "axios-jsonp-pro": "^1.1.4",
     "bootstrap": "^4.3.1",
-    "cors": "^2.8.5",
     "gh-pages": "^2.0.1",
-    "postman-request": "^2.88.1-postman.10",
     "qs": "^6.7.0",
     "react": "^16.8.6",
-    "react-bootstrap": "^1.0.0-beta.8",
     "react-cookies": "^0.1.1",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "request": "^2.88.0",
-    "superagent": "^5.0.5"
+    "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

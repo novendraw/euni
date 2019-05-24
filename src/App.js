@@ -3,8 +3,6 @@ import './App.css';
 import axios from 'axios';
 import qs from 'qs';
 import cookie from 'react-cookies';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 
 class App extends React.Component{
   constructor (props) {
@@ -27,10 +25,10 @@ class App extends React.Component{
     this.handleTypeChange = this.handleTypeChange.bind(this);
   }
     handleTypeChange(event) {
-        if (event.target.value == "byname"){
+        if (event.target.value === "byname"){
           this.setState({byname:true});
         } else {
-          if (event.target.value == "byid") {
+          if (event.target.value === "byid") {
             this.setState({byname:false});
           }
         }
@@ -144,56 +142,73 @@ class App extends React.Component{
   render() {
     if (cookie.load('token') != null){
       return (
-          <div id="content" >
-              <form>
-                <div>
-                  Data per Page :
-                  <input type="text" placeholder="10" value={this.state.count}
-                         />
-                  Search Type :
-                  <select onChange={this.handleTypeChange}>
+          <div id="content" className="container-fluid">
+                <div className="form-group typewriter">
+                  <h1>Engi’s University Data Finder</h1>
+                </div>
+                <div className="form-row">
+                  <div className="form-group col">
+                  <label for="count">Data per Page</label>
+                  <input className="form-control" id="count" type="text" placeholder="10" value={this.state.count}/>
+                  </div>
+                  <div className="form-group col">
+                  <label for="searchtype">Search Type</label>
+                  <select id="searchtype" class="form-control" onChange={this.handleTypeChange}>
                   <option value="byname">Search by Name</option>
                   <option value="byid">Search by ID</option>
                   </select>
-
+                  </div>
                 </div>
-                  <input type="text" placeholder="Search Here" value={this.state.keyword}
+                <div className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Search Here" value={this.state.keyword}
                         onChange={this.handleSearch}/>
-              </form>
-              <table border="1" >
-                  <tbody>
-                  <tr>
-                    <th>Nama</th>
-                    <th>NIM TPB</th>
-                    <th>NIM Jurusan</th>
-                    <th>Program Studi</th>
-                  </tr>
-                  {this.state.data.map(function(item, key) {
-                      return (
-                          <tr key = {key} >
-                              <td>{item.name}</td>
-                              <td>{item.nim_tpb}</td>
-                              <td>{item.nim_jur}</td>
-                              <td>{item.prodi}</td>
-                          </tr>
-                      )
+                </div>
+                <div className="table-responsive-xl">
+                  <table className="table table-bordered table-light table-striped">
+                    <thead className="thead-light">
+                      <tr>
+                        <th>Nama</th>
+                        <th>NIM TPB</th>
+                        <th>NIM Jurusan</th>
+                        <th>Program Studi</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      {this.state.data.map(function(item, key) {
+                          return (
+                              <tr key = {key} >
+                                  <td>{item.name}</td>
+                                  <td>{item.nim_tpb}</td>
+                                  <td>{item.nim_jur}</td>
+                                  <td>{item.prodi}</td>
+                              </tr>
+                          )
 
-                  })}</tbody>
-              </table>
+                      })}</tbody>
+                  </table>
+                </div>
           </div>
       )
     } else {
       return (
-          <div id = "content">
-            <Form.Group >
-              <Form.Control size="lg" type="text" placeholder="Username" value={this.state.username}
+          <div id = "content" className="container-fluid mt-5">
+            <form >
+              <div className="form-group typewriter">
+                <h1>Engi’s University Data Finder</h1>
+              </div>
+              <div className="form-group">
+              <input className="form-control form-control-lg" type="text" placeholder="Username" value={this.state.username}
                      onChange={this.handleUsernameChange}/>
-              <Form.Control size="lg" type="password" placeholder="Password" value={this.state.password}
+              </div>
+              <div className="form-group">
+              <input className="form-control form-control-lg" type="password" placeholder="Password" value={this.state.password}
                      onChange={this.handlePasswordChange}/>
-              <Button variant="light" size="lg" onClick={this.handleUserLogin}>Login</Button>
-              <Button variant="light" size="lg" onClick={this.handleUserRegister}>Register</Button>
-
-            </Form.Group>
+              </div>
+              <div className="form-group" >
+              <input className="btn btn-light btn-lg btn-block" type="button" value="Login" onClick={this.handleUserLogin}/>
+              <input className="btn btn-light btn-lg btn-block" type="button" value="Register" onClick={this.handleUserRegister}/>
+              </div>
+            </form>
           </div>
       )
     }
