@@ -14,6 +14,7 @@ class App extends React.Component{
       data: [],
       byname: true,
       count: 10,
+      page: 0,
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -23,6 +24,7 @@ class App extends React.Component{
     this.handleByName = this.handleByName.bind(this);
     this.handleById = this.handleById.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleCountChange = this.handleCountChange.bind(this);
   }
     handleTypeChange(event) {
         if (event.target.value === "byname"){
@@ -35,32 +37,53 @@ class App extends React.Component{
         this.setState({data:[]});
     }
     handleByName(event) {
-
-    var self = this;
-      axios.get('http://goxcors.appspot.com/cors?method=GET&header=Cookie|token='
-          +cookie.load('token')
-          +'&url=https://api.stya.net/nim/byname?name='
-          + event.target.value + '&count='
-          + this.state.count
-          + '&page=0')
+    const target = 'https://api.stya.net/nim/byname?name='
+        + event.target.value + '&count='
+        + this.state.count
+        + '&page=0';
+    const config={
+      headers: {
+        'Target-URL' : target,
+        'tokennya' : 'token=' + cookie.load('token'),
+      },
+    };
+      const self = this;
+      axios.get('https://vendra-cors.herokuapp.com/',config)
         .then(function (response) {
-            self.setState({data: response.data.payload})
+            self.setState({data: response.data.payload, page: 0})
         })
     }
     handleById(event) {
-      var self = this;
-      axios.get('http://goxcors.appspot.com/cors?method=GET&header=Cookie|token='
-          +cookie.load('token')
-          +'&url=https://api.stya.net/nim/byid?query='
+      const target = 'https://api.stya.net/nim/byid?query='
           + event.target.value + '&count='
           + this.state.count
-          + '&page=0')
+          + '&page=0';
+      const config={
+        headers: {
+          'Target-URL' : target,
+          'tokennya' : 'token=' + cookie.load('token'),
+        },
+      };
+      const self = this;
+      axios.get('https://vendra-cors.herokuapp.com/',config)
           .then(function (response) {
-            self.setState({data: response.data.payload})
+            self.setState({data: response.data.payload, page: 0})
           })
+
     }
     handleSearch(event) {
     this.setState({keyword: event.target.value});
+    
+      const expires = new Date();
+      expires.setDate(Date.now() + 86400);
+
+      cookie.save(
+          'token',
+          cookie.load('token'),
+          {
+            path: '/',
+            expires
+          });
 
     if (this.state.byname) {
       this.handleByName(event);
@@ -71,21 +94,25 @@ class App extends React.Component{
     handleUsernameChange(event) {
     this.setState({username: event.target.value});
     }
+    handleCountChange(event) {
+      this.setState({data: [],count: event.target.value});
+    }
     handlePasswordChange(event) {
-    this.setState({password: event.target.value});
+      this.setState({password: event.target.value});
     }
     handleUserLogin(event) {
     event.preventDefault();
     const config = {
     headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
+    'Target-URL': 'https://api.stya.net/nim/login',
     },
     };
     const datadata = {
     username: this.state.username,
     password: this.state.password,
     };
-    axios.post('http://goxcors.appspot.com/cors?method=POST&url=https://api.stya.net/nim/login', qs.stringify(datadata), config)
+    axios.post('https://cors-vendra.herokuapp.com/', qs.stringify(datadata), config)
     .then(function (response) {
       if (response.data.code == null) {
         alert("Please supply a username and a password!");
@@ -94,7 +121,7 @@ class App extends React.Component{
           alert("Wrong username/password!");
         } else {
           const expires = new Date();
-          expires.setDate(Date.now() + 86400)
+          expires.setDate(Date.now() + 86400);
 
           cookie.save(
               'token',
@@ -103,41 +130,38 @@ class App extends React.Component{
                 path: '/',
                 expires
               }
-          )
-          const elem = document.getElementById("content");
-          elem.innerHTML = "You Already Signed In";
+          );
 
         }
       }
     })
     }
     handleUserRegister(event) {
-    event.preventDefault();
-    const config = {
-    headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    };
-    const datadata = {
-    username: this.state.username,
-    password: this.state.password,
-    };
-    var self = this;
-    axios.post('http://goxcors.appspot.com/cors?method=POST&url=https://api.stya.net/nim/register', qs.stringify(datadata), config)
-    .then(function (response) {
-      if (response.data.code == null) {
-        alert("Please supply a username and a password!");
-      } else {
-        if (response.data.code === -4) {
-          alert("That username is already taken!");
+      event.preventDefault();
+      const config = {
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+           'Target-URL': 'https://api.stya.net/nim/register',
+          },
+      };
+      const datadata = {
+        username: this.state.username,
+        password: this.state.password,
+      };
+      const self = this;
+      axios.post('https://cors-vendra.herokuapp.com/', qs.stringify(datadata), config)
+      .then(function (response) {
+        if (response.data.code == null) {
+          alert("Please supply a username and a password!");
         } else {
-          self.handleUserLogin(event);
+          if (response.data.code === -4) {
+            alert("That username is already taken!");
+          } else {
+            self.handleUserLogin(event);
+          }
         }
-      }
-    })
+      })
     }
-
-
 
   render() {
     if (cookie.load('token') != null){
@@ -148,12 +172,13 @@ class App extends React.Component{
                 </div>
                 <div className="form-row">
                   <div className="form-group col">
-                  <label for="count">Data per Page</label>
-                  <input className="form-control" id="count" type="text" placeholder="10" value={this.state.count}/>
+                  <label htmlFor="count">Data per Page</label>
+                  <input className="form-control" id="count" type="text" placeholder="10" value={this.state.count}
+                        onChange={this.handleCountChange}/>
                   </div>
                   <div className="form-group col">
-                  <label for="searchtype">Search Type</label>
-                  <select id="searchtype" class="form-control" onChange={this.handleTypeChange}>
+                  <label htmlFor="searchtype">Search Type</label>
+                  <select id="searchtype" className="form-control" onChange={this.handleTypeChange}>
                   <option value="byname">Search by Name</option>
                   <option value="byid">Search by ID</option>
                   </select>
