@@ -64,11 +64,19 @@ class App extends React.Component{
         const self = this;
         axios.get('https://vendra-cors.herokuapp.com/',config)
             .then(function (response) {
-                self.setState({data: response.data.payload, page: 0})
+                if (response.data.payload == null) {
+                    alert("Your token is invalid, please re login")
+                } else {
+                    self.setState({data: response.data.payload, page: 0})
+                }
             });
         axios.get('https://vendra-cors.herokuapp.com/',configtotal)
             .then(function (response) {
-                self.setState({total: response.data.code})
+                if (response.data.payload == null) {
+                    alert("Your token is invalid, please re login")
+                } else {
+                    self.setState({total: response.data.code})
+                }
             });
     }
     handleById(event) {
@@ -94,11 +102,19 @@ class App extends React.Component{
         const self = this;
         axios.get('https://vendra-cors.herokuapp.com/',config)
             .then(function (response) {
-                self.setState({data: response.data.payload, page: 0})
+                if (response.data.payload == null) {
+                    alert("Your token is invalid, please re login")
+                } else {
+                    self.setState({data: response.data.payload, page: 0})
+                }
             });
         axios.get('https://vendra-cors.herokuapp.com/',configtotal)
             .then(function (response) {
-                self.setState({total: response.data.code})
+                if (response.data.payload == null) {
+                    alert("Your token is invalid, please re login")
+                } else {
+                    self.setState({total: response.data.code})
+                }
             });
     }
     handleSearch(event) {
