@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import axios from 'axios';
 import qs from 'qs';
 import cookie from 'react-cookies';
@@ -102,7 +101,6 @@ class App extends React.Component{
                 self.setState({total: response.data.code})
             });
     }
-
     handleSearch(event) {
         this.setState({keyword: event.target.value});
         const expires = new Date();
