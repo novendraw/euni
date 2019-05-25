@@ -28,6 +28,8 @@ class App extends React.Component{
         this.handleCountChange = this.handleCountChange.bind(this);
         this.handleChangePage = this.handleChangePage.bind(this);
     }
+
+    /* Handle byname state when search type input changed */
     handleTypeChange(event) {
         if (event.target.value === "byname"){
             this.setState({byname:true});
@@ -38,6 +40,8 @@ class App extends React.Component{
         }
         this.setState({data:[]});
     }
+
+    /* Handle search request when using byname search type */
     handleByName(event) {
         const target = 'https://api.stya.net/nim/byname?name='
             + event.target.value + '&count='
@@ -65,20 +69,22 @@ class App extends React.Component{
         axios.get('https://vendra-cors.herokuapp.com/',config)
             .then(function (response) {
                 if (response.data.payload == null) {
-                    alert("Your token is invalid, please re login")
+                    alert("Invalid token. Please revalidate!")
+                    cookie.remove('token');
+                    window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
                 }
             });
         axios.get('https://vendra-cors.herokuapp.com/',configtotal)
             .then(function (response) {
-                if (response.data.payload == null) {
-                    alert("Your token is invalid, please re login")
-                } else {
+                if (response.data.payload != null) {
                     self.setState({total: response.data.code})
                 }
             });
     }
+
+    /* Handle search request when using byid search type */
     handleById(event) {
         const target = 'https://api.stya.net/nim/byid?query='
             + event.target.value + '&count='
@@ -103,20 +109,22 @@ class App extends React.Component{
         axios.get('https://vendra-cors.herokuapp.com/',config)
             .then(function (response) {
                 if (response.data.payload == null) {
-                    alert("Your token is invalid, please re login")
+                    alert("Invalid token. Please revalidate!")
+                    cookie.remove('token');
+                    window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
                 }
             });
         axios.get('https://vendra-cors.herokuapp.com/',configtotal)
             .then(function (response) {
-                if (response.data.payload == null) {
-                    alert("Your token is invalid, please re login")
-                } else {
+                if (response.data.payload != null) {
                     self.setState({total: response.data.code})
                 }
             });
     }
+
+    /* Handle search action when keyword parameter changed */
     handleSearch(event) {
         this.setState({keyword: event.target.value});
         const expires = new Date();
@@ -139,15 +147,23 @@ class App extends React.Component{
             alert("Please provide valid \"Data per Page\" parameter")
         }
     }
+
+    /* Handle username state when username input changed */
     handleUsernameChange(event) {
         this.setState({username: event.target.value});
     }
+
+    /* Handle count state when count parameter changed */
     handleCountChange(event) {
         this.setState({data: [],count: event.target.value});
     }
+
+    /* Handle password state when password input changed */
     handlePasswordChange(event) {
         this.setState({password: event.target.value});
     }
+
+    /* Handle login request */
     handleUserLogin(event) {
         event.preventDefault();
         const config = {
@@ -184,6 +200,8 @@ class App extends React.Component{
                 }
             })
     }
+
+    /* Handle register request */
     handleUserRegister(event) {
         event.preventDefault();
         const config = {
@@ -214,6 +232,8 @@ class App extends React.Component{
                 }
             })
     }
+
+    /* Handle search action when change page */
     handleChangePage(pages) {
         const expires = new Date();
         expires.setDate(Date.now() + 86400);
@@ -248,12 +268,22 @@ class App extends React.Component{
         const self = this;
         axios.get('https://vendra-cors.herokuapp.com/',config)
             .then(function (response) {
-                self.setState({data: response.data.payload})
+                if (response.data.payload == null) {
+                    alert("Invalid token. Please revalidate!");
+                    cookie.remove('token');
+                    window.location.reload();
+                } else {
+                    self.setState({data: response.data.payload});
+                }
             })
     }
 
     render() {
+
+        /* Check if token already supplied */
         if (cookie.load('token') != null){
+
+            /* Render Searching Page */
             return (
                 <div id="content" className="container-fluid mt-5">
                     <div className="form-group typewriter">
@@ -375,6 +405,8 @@ class App extends React.Component{
                 </div>
             )
         } else {
+
+            /* Render Login/Register Page */
             return (
                 <div id = "content" className="container-fluid mt-5">
                     <form >
