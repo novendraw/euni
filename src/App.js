@@ -70,7 +70,7 @@ class App extends React.Component{
             .then(function (response) {
                 if (response.data.payload == null) {
                     alert("Invalid token. Please revalidate!")
-                    cookie.remove('token');
+                    cookie.remove('token', { path: '/' });
                     window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
@@ -110,7 +110,7 @@ class App extends React.Component{
             .then(function (response) {
                 if (response.data.payload == null) {
                     alert("Invalid token. Please revalidate!")
-                    cookie.remove('token');
+                    cookie.remove('token', { path: '/' });
                     window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
@@ -270,7 +270,7 @@ class App extends React.Component{
             .then(function (response) {
                 if (response.data.payload == null) {
                     alert("Invalid token. Please revalidate!");
-                    cookie.remove('token');
+                    cookie.remove('token', { path: '/' });
                     window.location.reload();
                 } else {
                     self.setState({data: response.data.payload});

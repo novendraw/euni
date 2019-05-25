@@ -8,3 +8,7 @@ src/serviceWorker\.js
 src/logo\.svg
 
 \.idea/
+
+build/
+
+\.gitmodules
