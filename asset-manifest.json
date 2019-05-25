@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/euni/static/css/main.64890cc2.chunk.css",
-    "main.js": "/euni/static/js/main.612208aa.chunk.js",
-    "main.js.map": "/euni/static/js/main.612208aa.chunk.js.map",
+    "main.css": "/euni/static/css/main.fefd9f22.chunk.css",
+    "main.js": "/euni/static/js/main.fef1d4b8.chunk.js",
+    "main.js.map": "/euni/static/js/main.fef1d4b8.chunk.js.map",
     "runtime~main.js": "/euni/static/js/runtime~main.ef66bfa3.js",
     "runtime~main.js.map": "/euni/static/js/runtime~main.ef66bfa3.js.map",
-    "static/js/2.b5adb1bc.chunk.js": "/euni/static/js/2.b5adb1bc.chunk.js",
-    "static/js/2.b5adb1bc.chunk.js.map": "/euni/static/js/2.b5adb1bc.chunk.js.map",
+    "static/js/2.7f183fe6.chunk.js": "/euni/static/js/2.7f183fe6.chunk.js",
+    "static/js/2.7f183fe6.chunk.js.map": "/euni/static/js/2.7f183fe6.chunk.js.map",
     "index.html": "/euni/index.html",
-    "precache-manifest.60ee527047ecb1cd59ffcdbbd532807e.js": "/euni/precache-manifest.60ee527047ecb1cd59ffcdbbd532807e.js",
+    "precache-manifest.7c9463767ebc6c80db58cc190ec565b1.js": "/euni/precache-manifest.7c9463767ebc6c80db58cc190ec565b1.js",
     "service-worker.js": "/euni/service-worker.js",
-    "static/css/main.64890cc2.chunk.css.map": "/euni/static/css/main.64890cc2.chunk.css.map"
+    "static/css/main.fefd9f22.chunk.css.map": "/euni/static/css/main.fefd9f22.chunk.css.map"
   }
 }
