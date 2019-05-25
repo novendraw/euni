@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import qs from 'qs';
 import cookie from 'react-cookies';
+import Pagination from 'react-paginating';
 
 class App extends React.Component{
   constructor (props) {
@@ -15,6 +16,7 @@ class App extends React.Component{
       byname: true,
       count: 10,
       page: 0,
+      total: 0,
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -25,6 +27,7 @@ class App extends React.Component{
     this.handleById = this.handleById.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleCountChange = this.handleCountChange.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
   }
     handleTypeChange(event) {
         if (event.target.value === "byname"){
@@ -37,30 +40,55 @@ class App extends React.Component{
         this.setState({data:[]});
     }
     handleByName(event) {
-    const target = 'https://api.stya.net/nim/byname?name='
-        + event.target.value + '&count='
-        + this.state.count
-        + '&page=0';
-    const config={
-      headers: {
-        'Target-URL' : target,
-        'tokennya' : 'token=' + cookie.load('token'),
-      },
-    };
+      const target = 'https://api.stya.net/nim/byname?name='
+          + event.target.value + '&count='
+          + this.state.count
+          + '&page=0';
+      const targettotal = 'https://api.stya.net/nim/byname?name='
+          + event.target.value + '&count='
+          + '9007199254740991';
+
+      const config={
+        headers: {
+          'Target-URL' : target,
+          'tokennya' : 'token=' + cookie.load('token'),
+        },
+      };
+
+      const configtotal={
+        headers: {
+          'Target-URL' : targettotal,
+          'tokennya' : 'token=' + cookie.load('token'),
+        },
+      };
+
       const self = this;
       axios.get('https://vendra-cors.herokuapp.com/',config)
         .then(function (response) {
             self.setState({data: response.data.payload, page: 0})
-        })
+        });
+      axios.get('https://vendra-cors.herokuapp.com/',configtotal)
+          .then(function (response) {
+            self.setState({total: response.data.code})
+          });
     }
     handleById(event) {
       const target = 'https://api.stya.net/nim/byid?query='
           + event.target.value + '&count='
           + this.state.count
           + '&page=0';
+      const targettotal = 'https://api.stya.net/nim/byid?query='
+          + event.target.value + '&count='
+          + '9007199254740991';
       const config={
         headers: {
           'Target-URL' : target,
+          'tokennya' : 'token=' + cookie.load('token'),
+        },
+      };
+      const configtotal={
+        headers: {
+          'Target-URL' : targettotal,
           'tokennya' : 'token=' + cookie.load('token'),
         },
       };
@@ -69,8 +97,12 @@ class App extends React.Component{
           .then(function (response) {
             self.setState({data: response.data.payload, page: 0})
           })
-
+      axios.get('https://vendra-cors.herokuapp.com/',configtotal)
+          .then(function (response) {
+            self.setState({total: response.data.code})
+          });
     }
+
     handleSearch(event) {
       this.setState({keyword: event.target.value});
         const expires = new Date();
@@ -168,6 +200,35 @@ class App extends React.Component{
         }
       })
     }
+    handleChangePage(pages) {
+
+      this.setState({
+        page: pages-1
+      });
+
+      let link = '';
+      if (this.state.byname) {
+        link = 'https://api.stya.net/nim/byname?name=';
+      }  else {
+        link = 'https://api.stya.net/nim/byid?query=';
+      }
+
+      const target = link
+          + this.state.keyword + '&count='
+          + this.state.count
+          + '&page=' + (pages-1).toString();
+      const config={
+        headers: {
+          'Target-URL' : target,
+          'tokennya' : 'token=' + cookie.load('token'),
+        },
+      };
+      const self = this;
+      axios.get('https://vendra-cors.herokuapp.com/',config)
+          .then(function (response) {
+            self.setState({data: response.data.payload})
+          })
+    }
 
   render() {
     if (cookie.load('token') != null){
@@ -214,10 +275,81 @@ class App extends React.Component{
                                   <td>{item.prodi}</td>
                               </tr>
                           )
-
                       })}</tbody>
                   </table>
                 </div>
+            <div className="form-group">
+              <Pagination
+                  total={this.state.total}
+                  limit={this.state.count}
+                  pageCount={3}
+                  currentPage={this.state.page+1}
+              >
+                {({
+                    pages,
+                    currentPage,
+                    hasNextPage,
+                    hasPreviousPage,
+                    previousPage,
+                    nextPage,
+                    getPageItemProps
+                  }) => (
+                    <ul className="pagination justify-content-center">
+
+                      {hasPreviousPage && (
+                          <li className="page-item"
+                              {...getPageItemProps({
+                                pageValue: previousPage,
+                                onPageChange: this.handleChangePage
+                              })}
+                          >
+                            <a className="page-link">{"Previous"}</a>
+                          </li>
+                      )}
+
+                      {pages.map(page => {
+                        if (currentPage === page) {
+                          return (
+                              <li className="page-item active"
+                                  {...getPageItemProps({
+                                    pageValue: page,
+                                    key: page,
+                                    onPageChange: this.handleChangePage
+                                  })}
+                              >
+                                <a className="page-link">{page}</a>
+                              </li>
+                          );
+                        } else {
+                          return (
+                              <li className="page-item"
+                                  {...getPageItemProps({
+                                    pageValue: page,
+                                    key: page,
+                                    onPageChange: this.handleChangePage
+                                  })}
+                              >
+                                <a className="page-link">{page}</a>
+                              </li>
+                          );
+                        }
+                      })}
+
+                      {hasNextPage && (
+                          <li className="page-item"
+                              {...getPageItemProps({
+                                pageValue: nextPage,
+                                onPageChange: this.handleChangePage
+                              })}
+                          >
+                            <a className="page-link">{"Next"}</a>
+                          </li>
+                      )}
+
+                    </ul>
+                )}
+              </Pagination>
+            </div>
           </div>
       )
     } else {
