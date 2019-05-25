@@ -12,3 +12,5 @@ src/logo\.svg
 build/
 
 \.gitmodules
+
+README\.md\.backup
