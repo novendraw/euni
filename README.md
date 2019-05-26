@@ -14,24 +14,117 @@ npm install
 npm run start
 ```
 
->The application will run on http://localhost:3000/ (if port still available).
+> The application will run on [http://localhost:3000/](http://localhost:3000/) (if port still available).
 
 ## Usage
+
+
+## Screenshots
+
+### Desktop
+
+
+
+### Mobile
 
 
 
 ## Application Design
 
+In this project, I use the **Chain of Responsibility** design pattern.
 
+
+> Chain of Responsibility is a behavioral design pattern that pass requests along a chain of handlers. After receiving the request, each handler decides to process the request or forward it to the next handler in the chain.
+
+The application consist of two pages, Login / Register Page and Search Page. In each page there are some parameters and handlers for different types of request.
+
+The parameters and handlers in this project are :
+
+### Login / Register Page
+---
+
+#### username
+---
+Type : String
+
+Required, can't empty or longer than 20 characters
+
+#### password
+---
+Type : String
+
+Required, can't empty
+
+#### handleUsernameChange
+---
+Handle username state when username input changed.
+#### handlePasswordChange
+---
+Handle password state when password input changed.
+#### handleUserLogin
+---
+Handle login request when login button clicked.
+#### handleUserRegister
+---
+Handle register request when register button clicked.
+### Search Page
+---
+#### count
+---
+Type : Integer
+
+Default : 10
+
+#### byname
+---
+Type : boolean
+
+Default : true
+
+#### keyword
+---
+Type : String
+
+Required
+
+#### token
+---
+Type : String
+
+Required, passed as cookie in header
+
+#### handleCountChange
+---
+Handle count state when count parameter changed.
+
+#### handleTypeChange
+---
+Handle byname state when search type input changed.
+
+#### handleSearch
+---
+Handle search action when keyword parameter changed.
+
+#### handleByName
+---
+Handle search request when using byname search type.
+
+#### handleById
+---
+Handle search request when using byid search type.
+
+#### handleChangePage
+---
+Handle search action when change page.
 
 ## API Review
 
-### Pros
+### Pros :
 
 + Give enough explanations when error occured.
 + Many optional query parameters that can be configured when sending request.
 
-### Cons
+### Cons :
 
 + Bad response when send request to **register** url with empty `username` and empty `password` parameters. (quotation marks in `status` is missing)
 
@@ -49,11 +142,11 @@ npm run start
 
 	> Can be fixed by modifying the `'Access-Control-Allow-Origin'` header in the response.
 
-## Acknowledgment
+## Tech / Framework Used
 
 + [axios](https://www.npmjs.com/package/axios) (Promise based HTTP client for the browser and node.js)
 + [bootstrap](https://getbootstrap.com/) (Open source toolkit for developing with HTML, CSS, and JS)
-+ [gh-pages](https://www.npmjs.com/package/gh-pages) (Publish files to a gh-pages branch on GitHub (or any other branch anywhere else))
++ [Github Pages](https://pages.github.com/) (Turn github repository to website)
 + [qs](https://www.npmjs.com/package/qs) (A querystring parsing and stringifying library with some added security)
 + [react](https://reactjs.org/) (A JavaScript library for building user interfaces)
 + [react-cookies](https://www.npmjs.com/package/react-cookies) (Load and save cookies with React)
