@@ -41,80 +41,68 @@ The application consist of two pages, Login / Register Page and Search Page. In 
 The parameters and handlers in this project are :
 
 ### Login / Register Page
+
 ---
 
-#### username
----
+#### `username`
+
 Type : String
 
 Required, can't empty or longer than 20 characters
 
-#### password
----
+#### `password`
 Type : String
 
 Required, can't empty
 
-#### handleUsernameChange
----
+#### `handleUsernameChange`
 Handle username state when username input changed.
-#### handlePasswordChange
----
+#### `handlePasswordChange`
 Handle password state when password input changed.
-#### handleUserLogin
----
+#### `handleUserLogin`
 Handle login request when login button clicked.
-#### handleUserRegister
----
+#### `handleUserRegister`
 Handle register request when register button clicked.
 ### Search Page
+
 ---
-#### count
----
+
+#### `count`
 Type : Integer
 
 Default : 10
 
-#### byname
----
+#### `byname`
 Type : boolean
 
 Default : true
 
-#### keyword
----
+#### `keyword`
 Type : String
 
 Required
 
-#### token
----
+#### `token`
 Type : String
 
 Required, passed as cookie in header
 
-#### handleCountChange
----
+#### `handleCountChange`
 Handle count state when count parameter changed.
 
-#### handleTypeChange
----
+#### `handleTypeChange`
 Handle byname state when search type input changed.
 
-#### handleSearch
----
+#### `handleSearch`
 Handle search action when keyword parameter changed.
 
-#### handleByName
----
+#### `handleByName`
 Handle search request when using byname search type.
 
-#### handleById
----
+#### `handleById`
 Handle search request when using byid search type.
 
-#### handleChangePage
----
+#### `handleChangePage`
 Handle search action when change page.
 
 ## API Review
