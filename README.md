@@ -18,6 +18,13 @@ npm run start
 
 ## Usage
 
+1. Input your username and password.
+2. Click the login button if you have already registered, or click the register button if you haven't.
+3. Set `Data per Page` and `Search Type` to your liking.
+4. Input the `keyword` that you want to search.
+5. The search result will appear in the table below.
+
+> If an error occurs on one of the steps above, an alert that contains the error message will appear.
 
 ## Screenshots
 
@@ -43,7 +50,7 @@ npm run start
 
 > Login / Register Page, Search Page, and Alert Message
 
-![Mobile](https://user-images.githubusercontent.com/10545583/58389008-66167e80-8050-11e9-9242-09b3f32f1180.png)
+![Mobile](https://user-images.githubusercontent.com/10545583/58389264-1eddbd00-8053-11e9-9f1d-102f50180efa.png)
 
 ## Application Design
 
