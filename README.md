@@ -23,11 +23,27 @@ npm run start
 
 ### Desktop
 
+> Login / Register Page
 
+![Login / Register Page](https://user-images.githubusercontent.com/10545583/58389272-2e5d0600-8053-11e9-93e0-4d96bd57de58.png)
+
+> Search Next Page
+
+![Search Next Page](https://user-images.githubusercontent.com/10545583/58389269-2dc46f80-8053-11e9-90dc-a60b99443123.png)
+
+> Search by ID
+
+![Search by ID](https://user-images.githubusercontent.com/10545583/58389271-2e5d0600-8053-11e9-8ac0-1998467a8dfc.png)
+
+> Alert Message
+
+![Alert Message](https://user-images.githubusercontent.com/10545583/58389270-2e5d0600-8053-11e9-84b8-7207878e270e.png)
 
 ### Mobile
 
+> Login / Register Page, Search Page, and Alert Message
 
+![Mobile](https://user-images.githubusercontent.com/10545583/58389008-66167e80-8050-11e9-9242-09b3f32f1180.png)
 
 ## Application Design
 
