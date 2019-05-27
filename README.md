@@ -1,6 +1,8 @@
 # Engi's University Data Finder
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)	![Website](https://img.shields.io/website/https/novendraw.github.io/euni.svg?style=popout)
 
+**Engi's University Data Finder** is an application that can search student data, either by ID (or partial ID) or by name (or partial name). The search operation will be handled by  [API provided](https://api.stya.net/nim/). Before being able to search, users must login first (also handled by the [API](https://api.stya.net/nim/)).
+
 ## Installation
 
 You need **node.js** and **npm** to run this program. Please go to [node.js website](https://nodejs.org) if you haven't installed it.
