@@ -38,7 +38,7 @@ class App extends React.Component{
                 this.setState({byname:false});
             }
         }
-        this.setState({data : [], total : 0});
+        this.setState({data : [], total : 0, keyword: ''});
     }
 
     /* Handle search request when using byname search type */
@@ -142,7 +142,7 @@ class App extends React.Component{
 
     /* Handle count state when count parameter changed */
     handleCountChange(event) {
-        this.setState({data: [],count: event.target.value, total: 0});
+        this.setState({data: [],count: event.target.value, total: 0, keyword: ''});
     }
 
     /* Handle password state when password input changed */
