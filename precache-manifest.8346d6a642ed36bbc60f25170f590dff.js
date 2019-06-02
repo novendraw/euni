@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e2d51ea454e4abdd2c4e5d15904104ec",
+    "revision": "4df65e4b674bc192604850ac792211fc",
     "url": "/euni/index.html"
   },
   {
-    "revision": "1040a2e336e8e59e9b89",
+    "revision": "0cb0c0d8599e28e6ce15",
     "url": "/euni/static/css/main.fefd9f22.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/euni/static/js/2.d2a38cf3.chunk.js"
   },
   {
-    "revision": "1040a2e336e8e59e9b89",
-    "url": "/euni/static/js/main.845ea879.chunk.js"
+    "revision": "0cb0c0d8599e28e6ce15",
+    "url": "/euni/static/js/main.1f1cecf7.chunk.js"
   },
   {
     "revision": "d74128dc198f7683bfd1",
