@@ -38,7 +38,7 @@ class App extends React.Component{
                 this.setState({byname:false});
             }
         }
-        this.setState({data:[]});
+        this.setState({data : [], total : 0});
     }
 
     /* Handle search request when using byname search type */
@@ -51,32 +51,25 @@ class App extends React.Component{
             + event.target.value + '&count='
             + '9007199254740991';
 
-        const config={
+        const config = {
             headers: {
-                'Target-URL' : target,
-                'tokennya' : 'token=' + cookie.load('token'),
+                'Auth-Token' : cookie.load('token'),
             },
         };
 
-        const configtotal={
-            headers: {
-                'Target-URL' : targettotal,
-                'tokennya' : 'token=' + cookie.load('token'),
-            },
-        };
 
         const self = this;
-        axios.get('https://vendra-cors.herokuapp.com/',config)
+        axios.get(target,config)
             .then(function (response) {
                 if (response.data.payload == null) {
-                    alert("Invalid token. Please revalidate!")
+                    alert("Invalid token. Please revalidate!");
                     cookie.remove('token', { path: '/' });
                     window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
                 }
             });
-        axios.get('https://vendra-cors.herokuapp.com/',configtotal)
+        axios.get(targettotal,config)
             .then(function (response) {
                 if (response.data.payload != null) {
                     self.setState({total: response.data.code})
@@ -93,30 +86,24 @@ class App extends React.Component{
         const targettotal = 'https://api.stya.net/nim/byid?query='
             + event.target.value + '&count='
             + '9007199254740991';
-        const config={
+        const config = {
             headers: {
-                'Target-URL' : target,
-                'tokennya' : 'token=' + cookie.load('token'),
+                'Auth-Token' : cookie.load('token'),
             },
         };
-        const configtotal={
-            headers: {
-                'Target-URL' : targettotal,
-                'tokennya' : 'token=' + cookie.load('token'),
-            },
-        };
+
         const self = this;
-        axios.get('https://vendra-cors.herokuapp.com/',config)
+        axios.get(target,config)
             .then(function (response) {
                 if (response.data.payload == null) {
-                    alert("Invalid token. Please revalidate!")
+                    alert("Invalid token. Please revalidate!");
                     cookie.remove('token', { path: '/' });
                     window.location.reload();
                 } else {
                     self.setState({data: response.data.payload, page: 0})
                 }
             });
-        axios.get('https://vendra-cors.herokuapp.com/',configtotal)
+        axios.get(targettotal,config)
             .then(function (response) {
                 if (response.data.payload != null) {
                     self.setState({total: response.data.code})
@@ -155,7 +142,7 @@ class App extends React.Component{
 
     /* Handle count state when count parameter changed */
     handleCountChange(event) {
-        this.setState({data: [],count: event.target.value});
+        this.setState({data: [],count: event.target.value, total: 0});
     }
 
     /* Handle password state when password input changed */
@@ -169,34 +156,29 @@ class App extends React.Component{
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Target-URL': 'https://api.stya.net/nim/login',
             },
         };
         const datadata = {
             username: this.state.username,
             password: this.state.password,
         };
-        axios.post('https://cors-vendra.herokuapp.com/', qs.stringify(datadata), config)
+        axios.post('https://api.stya.net/nim/login', qs.stringify(datadata), config)
             .then(function (response) {
-                if (response.data.code == null) {
-                    alert("Please supply a username and a password!");
+                if (response.data.status !== "OK") {
+                    alert(response.data.status);
                 } else {
-                    if (response.data.code === -2) {
-                        alert("Wrong username/password!");
-                    } else {
-                        const expires = new Date();
-                        expires.setDate(Date.now() + 86400);
+                    const expires = new Date();
+                    expires.setDate(Date.now() + 86400);
 
-                        cookie.save(
-                            'token',
-                            response.data.token,
-                            {
-                                path: '/',
-                                expires
-                            }
-                        );
-                        window.location.reload();
-                    }
+                    cookie.save(
+                        'token',
+                        response.data.token,
+                        {
+                            path: '/',
+                            expires
+                        }
+                    );
+                    window.location.reload();
                 }
             })
     }
@@ -207,7 +189,6 @@ class App extends React.Component{
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Target-URL': 'https://api.stya.net/nim/register',
             },
         };
         const datadata = {
@@ -215,22 +196,15 @@ class App extends React.Component{
             password: this.state.password,
         };
         const self = this;
-        axios.post('https://cors-vendra.herokuapp.com/', qs.stringify(datadata), config)
+        axios.post('https://api.stya.net/nim/register', qs.stringify(datadata), config)
             .then(function (response) {
-                if (response.data.code == null ) {
-                    if (response.data[11] === '3'){
-                        alert("Username exceeded 20-character limitation!")
-                    } else {
-                        alert("Please supply a username and a password!");
-                    }
-                } else {
-                    if (response.data.code === -4) {
-                        alert("That username is already taken!");
+                    if (response.data.status !== "OK") {
+                        alert(response.data.status);
                     } else {
                         self.handleUserLogin(event);
                     }
                 }
-            })
+                )
     }
 
     /* Handle search action when change page */
@@ -261,12 +235,11 @@ class App extends React.Component{
             + '&page=' + (pages-1).toString();
         const config={
             headers: {
-                'Target-URL' : target,
-                'tokennya' : 'token=' + cookie.load('token'),
+                'Auth-Token' : cookie.load('token'),
             },
         };
         const self = this;
-        axios.get('https://vendra-cors.herokuapp.com/',config)
+        axios.get(target,config)
             .then(function (response) {
                 if (response.data.payload == null) {
                     alert("Invalid token. Please revalidate!");
