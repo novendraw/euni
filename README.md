@@ -142,18 +142,32 @@ Handle search action when change page.
 + Bad response when send request to **register** url with empty `username` and empty `password` parameters. (quotation marks in `status` is missing)
 
 	> Can be fixed by adding quotation marks to `status`.
+	
+	> - UPDATE 2 June 2019 : This problem **Already Fixed**.
 
 + Bad response when send request to **login** url with empty `username` and empty `password` parameters. (quotation marks in `status` is missing)
 
 	> Can be fixed by adding quotation marks to `status`.
 
+	> - UPDATE 2 June 2019 : This problem **Already Fixed**.
+
 + Bad response when send request to **register** url with `username` parameter length more than 20 characters. (quotation marks in `status` is missing)
 
 	> Can be fixed by adding quotation marks to `status`.
 
+	> - UPDATE 2 June 2019 : This problem **Already Fixed**.
+
 + The value of the `'Access-Control-Allow-Origin'` header in the response is `'*'`. (Can't do CORS Request)
 
 	> Can be fixed by modifying the `'Access-Control-Allow-Origin'` header in the response.
+
+	> - UPDATE 2 June 2019 : This problem **Already Fixed**.
+
++ Doesn't explicitly provide a total of pages containing data for specific value of `count` parameter that can be used in paginations.
+
+	> Total of Pages containing data can be obtained by dividing the `total data` with the value of `count` parameter.
+	
+	> - `total data` can be obtained by send request with `MAX_INT` as the value of `count` parameter.
 
 ## Tech / Framework Used
 
